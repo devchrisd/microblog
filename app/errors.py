@@ -1,5 +1,7 @@
-from flask import render_template
 from app import app, db
+from flask import render_template
+# from flask_babel import _
+# from flask_babel import lazy_gettext as _l
 
 @app.errorhandler(404)
 def not_found_error(error):

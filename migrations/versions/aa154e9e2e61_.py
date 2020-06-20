@@ -1,4 +1,4 @@
-"""empty message
+"""create user and post table
 
 Revision ID: aa154e9e2e61
 Revises:

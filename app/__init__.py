@@ -1,5 +1,7 @@
 from config import Config
 from flask import Flask
+from flask import request
+from flask_babel import Babel
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_mail import Mail
@@ -15,13 +17,20 @@ import os
 app = Flask(__name__)
 app.config.from_object(Config)
 bootstrap = Bootstrap(app)
+babel = Babel(app)
+
+@babel.localeselector
+def get_locale():
+    # return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return 'zh'
+
+login = LoginManager(app)
+login.login_view = 'login'
 mail = Mail(app)
 moment = Moment(app)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-login = LoginManager(app)
-login.login_view = 'login'
 
 if not app.debug:
     if app.config['MAIL_SERVER']:
