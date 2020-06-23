@@ -11,7 +11,7 @@ subscription_key = app.config['MS_TRANSLATOR_KEY']
 subscription_region = app.config['MS_TRANSLATOR_REGION']
 
 # this is an old version that doesn't work now
-def old_translate(text, source_language, dest_language):
+def translate(text, dest_language):
     if 'MS_TRANSLATOR_KEY' not in app.config or \
             not app.config['MS_TRANSLATOR_KEY']:
         return _('Error: the translation service is not configured.')
@@ -20,22 +20,27 @@ def old_translate(text, source_language, dest_language):
         'Ocp-Apim-Subscription-Key': subscription_key,
         'Ocp-Apim-Subscription-Region':subscription_region,
     }
-    result = requests.get('https://api.cognitive.microsofttranslator.com/v2/Ajax.svc'
-                     '/Translate?text={}&from={}&to={}'.format(
-                         text, source_language, dest_language),
+    response = requests.get('https://api.microsofttranslator.com/v2/Ajax.svc'
+                     '/Translate?text={}&to={}'.format(
+                         text, dest_language),
                      headers=auth)
 
-    if result.status_code != 200:
+    # response = requests.get('https://api.cognitive.microsofttranslator.com/v2/Ajax.svc'
+    #                  '/Translate?text={}&from={}&to={}'.format(
+    #                      text, source_language, dest_language),
+    #                  headers=auth)
+
+    if response.status_code != 200:
         return _('Error: the translation service failed.')
 
-    return json.loads(result.content.decode('utf-8-sig'))
+    return json.loads(response.content.decode('utf-8-sig'))
 
 
 # Our Flask route will supply two arguments: text_input and language_output.
 # When the translate text button is pressed in our Flask app, the Ajax request
 # will grab these values from our web app, and use them in the request.
 # See main.js for Ajax calls.
-def translate(text_input, language_output):
+def new_translate(text_input, language_output):
     if 'MS_TRANSLATOR_KEY' not in app.config or \
             not app.config['MS_TRANSLATOR_KEY']:
         return _('Error: the translation service is not configured.')
