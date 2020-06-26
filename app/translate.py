@@ -1,20 +1,19 @@
 import json
 import requests
 from flask_babel import _
-from app import app
+from flask import current_app
 import os, uuid
-
-
-# Don't forget to replace with your Cog Services subscription key!
-# If you prefer to use environment variables, see Extra Credit for more info.
-subscription_key = app.config['MS_TRANSLATOR_KEY']
-subscription_region = app.config['MS_TRANSLATOR_REGION']
 
 # this is an old version that doesn't work now
 def translate(text, dest_language):
-    if 'MS_TRANSLATOR_KEY' not in app.config or \
-            not app.config['MS_TRANSLATOR_KEY']:
+    if 'MS_TRANSLATOR_KEY' not in current_app.config or \
+            not current_app.config['MS_TRANSLATOR_KEY']:
         return _('Error: the translation service is not configured.')
+
+    # Don't forget to replace with your Cog Services subscription key!
+    # If you prefer to use environment variables, see Extra Credit for more info.
+    subscription_key = current_app.config['MS_TRANSLATOR_KEY']
+    subscription_region = current_app.config['MS_TRANSLATOR_REGION']
 
     auth = {
         'Ocp-Apim-Subscription-Key': subscription_key,
@@ -41,9 +40,14 @@ def translate(text, dest_language):
 # will grab these values from our web app, and use them in the request.
 # See main.js for Ajax calls.
 def new_translate(text_input, language_output):
-    if 'MS_TRANSLATOR_KEY' not in app.config or \
-            not app.config['MS_TRANSLATOR_KEY']:
+    if 'MS_TRANSLATOR_KEY' not in current_app.config or \
+            not current_app.config['MS_TRANSLATOR_KEY']:
         return _('Error: the translation service is not configured.')
+
+    # Don't forget to replace with your Cog Services subscription key!
+    # If you prefer to use environment variables, see Extra Credit for more info.
+    subscription_key = current_app.config['MS_TRANSLATOR_KEY']
+    subscription_region = current_app.config['MS_TRANSLATOR_REGION']
 
     base_url = 'https://api.cognitive.microsofttranslator.com'
     path = '/translate?api-version=3.0'
