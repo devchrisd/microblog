@@ -3,4 +3,4 @@ logs
 my_venv
 .flaskenv
 .env
-app.db
+*.db
