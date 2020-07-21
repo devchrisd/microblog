@@ -20,7 +20,7 @@ msgstr ""
 
 #: app/__init__.py:18
 msgid "Please log in to access this page."
-msgstr ""
+msgstr "请登录"
 
 #: app/translate.py:11 app/translate.py:45
 msgid "Error: the translation service is not configured."

@@ -27,7 +27,7 @@ langdetect==1.0.8
 Mako==1.1.2
 MarkupSafe==1.1.1
 matplotlib==3.2.1
-mercurial==5.4
+mercurial==5.4.2
 mysql-connector==2.2.9
 numpy==1.18.2
 pandas==1.0.3
@@ -40,7 +40,9 @@ python-dateutil==2.8.1
 python-dotenv==0.13.0
 python-editor==1.0.4
 pytz==2019.3
+redis==3.5.3
 requests==2.24.0
+rq==1.4.3
 ruamel.appconfig==0.5.4
 ruamel.std.argparse==0.8.3
 ruamel.std.pathlib==0.6.4
