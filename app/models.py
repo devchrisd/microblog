@@ -241,7 +241,7 @@ class SearchableMixin(object):
 db.event.listen(db.session, 'before_commit', SearchableMixin.before_commit)
 db.event.listen(db.session, 'after_commit', SearchableMixin.after_commit)
 
-class Post(SearchableMixin, db.Model):
+class Post(PaginatedAPIMixin, SearchableMixin, db.Model):
     __searchable__ = ['body']
 
     id = db.Column(db.Integer, primary_key=True)
@@ -252,6 +252,26 @@ class Post(SearchableMixin, db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+    def to_dict(self):
+        data = {
+            'id': self.id,
+            'author': self.author.username,
+            'time': self.timestamp.isoformat() + 'Z',
+            'content': self.body,
+            '_links': {
+                'self': url_for('api.get_post', id=self.id)
+            }
+        }
+        return data
+
+    def from_dict(self, data):
+        # setattr(self, 'user_id', self.author.id)
+        # setattr(self, 'user_id', 3)
+        for field in ['user_id', 'body']:
+            if field in data:
+                setattr(self, field, data[field])
+
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)

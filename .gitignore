@@ -4,3 +4,4 @@ my_venv
 .flaskenv
 .env
 *.db
+app.db
